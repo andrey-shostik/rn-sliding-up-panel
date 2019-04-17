@@ -47,6 +47,7 @@ class SlidingUpPanel extends React.PureComponent {
     backdropOpacity: PropTypes.number,
     friction: PropTypes.number,
     children: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    containerStyle: PropTypes.shape({})
   }
 
   static defaultProps = {
@@ -63,7 +64,8 @@ class SlidingUpPanel extends React.PureComponent {
     allowDragging: true,
     showBackdrop: true,
     backdropOpacity: 0.75,
-    friction: Constants.DEFAULT_FRICTION
+    friction: Constants.DEFAULT_FRICTION,
+    containerStyle: {}
   }
 
   // eslint-disable-next-line react/sort-comp
@@ -357,7 +359,8 @@ class SlidingUpPanel extends React.PureComponent {
   _renderContent() {
     const {
       height,
-      draggableRange: {top, bottom}
+      draggableRange: {top, bottom},
+      containerStyle
     } = this.props
 
     const translateY = this.props.animatedValue.interpolate({
@@ -379,7 +382,7 @@ class SlidingUpPanel extends React.PureComponent {
         <Animated.View
           key="content"
           pointerEvents="box-none"
-          style={animatedContainerStyles}>
+          style={[animatedContainerStyles, containerStyle]}>
           {this.props.children(this._panResponder.panHandlers)}
         </Animated.View>
       )
